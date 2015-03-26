@@ -20,9 +20,10 @@
     <gap:plugin name="org.apache.cordova.geolocation" />
     <gap:plugin name="org.apache.cordova.inappbrowser" />
     <gap:plugin name="org.apache.cordova.media-capture" />
-    <gap:plugin name="uk.co.ibcomputing.phonegapbuild.plugins.receivesendintents" version="0.2.0">
+
+    <gap:plugin name="uk.co.ibcomputing.phonegapbuild.plugins.receivesendintents" >
         <param name="LAUNCHMODE" value="singleTop" />
     </gap:plugin>
-    <gap:plugin name="net.tunts.webintent" version="0.2.1" />
+    <gap:plugin name="net.tunts.webintent" />
 
 </widget>
