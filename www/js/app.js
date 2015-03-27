@@ -63,6 +63,14 @@
       }
     }, false);
 
+    document.addEventListener('deviceready', function () {
+      window.plugins.webintent.getExtra(WebIntent.EXTRA\_TEXT, function (url) {
+        //url is the value of EXTRA_TEXT
+      }, function() {
+        // There was no extra supplied.
+      });
+    });
+
     document.addEventListener("deviceready", function () {
         if(navigator.connection.type == Connection.NONE){
             //alert(navigator.connection.type);
@@ -130,7 +138,7 @@
             }
         }
 
-        
+
         $('body').html(homeTpl(icons));
         $('#homeicon_newnote').on('click', renderNewNoteView);
         $('#homeicon_newreply').on('click', renderNewReplyView);
@@ -145,7 +153,7 @@
         $('#homeicon_saved').on('click', upload_all_saved);
 
 
-    
+
 
     }
 
@@ -161,12 +169,12 @@
         $('.onoffswitch').on('click', function(ev){
             theSwitch = $(this);
             theSwitch.toggleClass('on');
-            config[theSwitch.attr('id')] = theSwitch.hasClass('on'); 
+            config[theSwitch.attr('id')] = theSwitch.hasClass('on');
             window.localStorage.setItem("config", JSON.stringify(config));
         });
         $('.setting .input-label input').on('change', function(ev){
             theInput = $(this);
-            config[theInput.attr('name')] = theInput.val(); 
+            config[theInput.attr('name')] = theInput.val();
             window.localStorage.setItem("config", JSON.stringify(config));
         });
         $('#btn-reset').on('click', function(ev){
@@ -488,7 +496,7 @@
 
         // todo escapte content and syndicate
         data = 'mp-type=note&h=entry&mp-action=create&content='+encodeURIComponent(content);
-        
+
         if(category){
             data += '&category=' + encodeURIComponent(category);
         }
@@ -575,7 +583,7 @@
             error('error: ' + error.code + '\n' + 'message: ' + error.message + '\n');
          },
          {
-            maximumAge: 3000, timeout: 5000, enableHighAccuracy: config['geo_high_accuracy'] 
+            maximumAge: 3000, timeout: 5000, enableHighAccuracy: config['geo_high_accuracy']
          });
     }
 
@@ -681,7 +689,7 @@
         data_obj['published'] = get_formatted_date();
 
         mp_uploadFile(data_obj, "video", videoData.type, videoData.fullPath,
-            function(r){ 
+            function(r){
                 success('Posted!');
                 $('#input-content').val('');
                 $('#inreplyto').val('');
@@ -691,8 +699,8 @@
                 $('#videoFile').html('');
                 $('#post-btn').removeAttr('disabled');
             },
-            function(error){ 
-                error("An error has occurred: Code = " + error.code); 
+            function(error){
+                error("An error has occurred: Code = " + error.code);
                 $('#post-btn').removeAttr('disabled');
         });
     }
@@ -764,7 +772,7 @@
         data_obj['published'] = get_formatted_date();
 
         mp_uploadFile(data_obj, "audio", audioData.type, audioData.fullPath,
-            function(r){ 
+            function(r){
                 success('Posted!');
                 $('#input-content').val('');
                 $('#inreplyto').val('');
@@ -774,8 +782,8 @@
                 $('#AudioFile').html('');
                 $('#post-btn').removeAttr('disabled');
             },
-            function(error){ 
-                error("An error has occurred: Code = " + error.code); 
+            function(error){
+                error("An error has occurred: Code = " + error.code);
                 $('#post-btn').removeAttr('disabled');
         });
     }
@@ -848,7 +856,7 @@
         data_obj['published'] = get_formatted_date();
 
         mp_uploadFile(data_obj, "photo", "image/jpeg", photo_uri,
-            function(r){ 
+            function(r){
                 success('Posted!');
                 $('#input-content').val('');
                 $('#inreplyto').val('');
@@ -858,8 +866,8 @@
                 $('#PhotoPreview').attr('src', '');
                 $('#post-btn').removeAttr('disabled');
             },
-            function(error){ 
-                error("An error has occurred: Code = " + error.code); 
+            function(error){
+                error("An error has occurred: Code = " + error.code);
                 $('#post-btn').removeAttr('disabled');
         });
 
@@ -883,12 +891,12 @@
             formatted_out += "0";
         }
         formatted_out += now.getHours() + ":";
- 
+
         if(now.getMinutes() < 10){
             formatted_out += "0";
         }
         formatted_out += now.getMinutes() + ":";
- 
+
         if(now.getSeconds() < 10){
             formatted_out += "0";
         }
@@ -901,7 +909,7 @@
         } else {
             formatted_out += "+";
         }
-        
+
         offset_hours = Math.abs(tz_offset) / 60;
         offset_mins = Math.abs(tz_offset) % 60;
 
@@ -909,13 +917,13 @@
             formatted_out += "0";
         }
         formatted_out += offset_hours + ":";
-        
+
 
         if(offset_mins < 10){
             formatted_out += "0";
         }
         formatted_out += offset_mins ;
- 
+
         return formatted_out
     }
 
@@ -935,25 +943,25 @@
                 format = obj['format'];
                 file_uri = obj['file'];
                 mp_uploadFile(data_obj, type, format, file_uri,
-                    function(r){ 
+                    function(r){
                     },
-                    function(error){ 
-                        error("An error has occurred: Code = " + error.code); 
+                    function(error){
+                        error("An error has occurred: Code = " + error.code);
                         savePost(obj);
                         list_processing = false;
                 });
             } else {
                 data = obj['data'];
-                mp_send(data, 
+                mp_send(data,
                     function(r){
                     },
-                    function(error){ 
-                        error("An error has occurred: Code = " + error.code); 
+                    function(error){
+                        error("An error has occurred: Code = " + error.code);
                         savePost(obj);
                         list_processing = false;
                 });
             }
-            
+
         }
     }
 
@@ -972,7 +980,7 @@
         saved = window.localStorage.getItem("saved");
         if(!saved){
             return null;
-        } 
+        }
         saved = JSON.parse(saved);
         if(saved == [] ){
             return null;
