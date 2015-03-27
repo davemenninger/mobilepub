@@ -66,8 +66,10 @@
     document.addEventListener('deviceready', function () {
       window.plugins.webintent.getExtra(WebIntent.EXTRA\_TEXT, function (url) {
         //url is the value of EXTRA_TEXT
+        alert( "hello: " + url );
       }, function() {
         // There was no extra supplied.
+        alert( "there was no extra supplied" );
       });
     });
 
